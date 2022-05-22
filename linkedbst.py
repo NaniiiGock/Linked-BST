@@ -336,52 +336,50 @@ class LinkedBST(AbstractCollection):
     def demo_bst(self,path):
         """returns efficiency"""
         words, big_list = self.find_words(path)
-        alp_words= sorted(words)
-        print("go")
-
-        # start_time = time.time()
-        # for word in alp_words:
-        #     big_list.index(word)
-        # #час пошуку у впорядкованому за абеткою словнику - 13c
-        # first = time.time() - start_time
-
+        alp_list= sorted(big_list)
         
+        # ______________________________________
+        # find in sorted list
+        start_time = time.time()
+        for word in words:
+            alp_list.index(word)
+        first = time.time() - start_time
+        print("time for finding in sorted list: ", round(first, 2))
+        
+        # ______________________________________
+        #unsorted tree
         tree1 = LinkedBST()
         for word in big_list:
             tree1.add(word)
-        print("tree built")
 
-        # tree2 = LinkedBST()
-        # for word in words:
-        #     tree2.add(word)
-        
-        print("going...")
+        # find in unsorted tree
         start_time = time.time()
         for word in words:
             tree1.find(word)
-        # Бінарне дерево пошуку будується на основі словника, який впорядкований за абеткою.
-        print("finishing...")
         second = time.time() - start_time
-        print(second)
+        print("time for finding in tree based om unsorted list: ", round(second, 2))
 
-        # start_time = time.time()
-        # for word in words:
-        #     tree2.find(word)
-        # # Бінарне дерево пошуку будується на основі словника який не впорядкований за абеткою
-        # third = time.time() - start_time
+        # ______________________________________
+        #sorted tree
+        tree2 = LinkedBST()
+        for word in alp_list:
+            tree2.add(word)
+        
+        # find in sorted tree
+        start_time = time.time()
+        for word in words:
+            tree2.find(word)
+        third = time.time() - start_time
+        print("time for finding in tree based om unsorted list: ", round(third, 2))
 
+        # ______________________________________
+        # rebalance tree and find in it
+        tree2.rebalance()
+        start_time = time.time()
+        for word in words:
+            tree2.find(word)
+        forth = time.time() - start_time
+        print("finding in rebalanced tree: ", round(forth,2))
         
-        # start_time = time.time()
-        # tree2.rebalance()
-        # for word in words:
-        #     tree2.find(word)
-        # #бінарнe деревo пошуку після його балансування.
-        # forth = time.time() - start_time
-        
-        # print(first, second, third, forth)
-        # print(first)
-        
-        # print(third)
-        # print(forth)
 link = LinkedBST()
 print(link.demo_bst("words.txt"))
